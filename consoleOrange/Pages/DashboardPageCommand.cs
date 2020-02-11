@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using System.Collections.ObjectModel;
 
 namespace consoleOrange.Pages
 {
@@ -18,8 +19,10 @@ namespace consoleOrange.Pages
         #region IWebWElements
         private static IWebElement txtFirstName => Driver.Instance.FindElement(By.Id("firstName"));
         private static IWebElement txtLastName => Driver.Instance.FindElement(By.Id("lastName"));
-        private static IWebElement selectDropdownLocation => Driver.Instance.FindElement(By.ClassName("select-dropdown"));
+        private static IWebElement selectDropdownLocation => Driver.Instance.FindElement(By.Id("location_inputfileddiv"));
         private static IWebElement btnNext => Driver.Instance.FindElement(By.Id("systemUserSaveBtn"));
+        
+
         #endregion
 
 
@@ -40,8 +43,19 @@ namespace consoleOrange.Pages
             switch(option)
             {
                 case LocationOptions.NewYorkSalesOffice:
-                    var selectedElement = new SelectElement(selectDropdownLocation);
-                    selectedElement.SelectByText("New York Sales Office");
+                    selectDropdownLocation.Click();
+                    ReadOnlyCollection<IWebElement> options = selectDropdownLocation.FindElements(By.TagName("li"));
+
+                    foreach (IWebElement element in options)
+                    {
+                        string text = element.Text;
+                        if (element.Text.Contains("Australian Regional HQ"))
+                        {
+                            element.Click();
+                            break;
+                        }
+                            
+                    }
 
                     break;
             }
