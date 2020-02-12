@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using System.Collections.ObjectModel;
 
 namespace consoleOrange.Pages
 {
@@ -13,7 +11,8 @@ namespace consoleOrange.Pages
         public enum LocationOptions
         {
             NewYorkSalesOffice,
-            LondonOffice
+            LondonOffice,
+            AustralianRegionalHQ,
         }
 
         #region IWebWElements
@@ -42,20 +41,9 @@ namespace consoleOrange.Pages
         {
             switch(option)
             {
-                case LocationOptions.NewYorkSalesOffice:
+                case LocationOptions.AustralianRegionalHQ:
                     selectDropdownLocation.Click();
-                    ReadOnlyCollection<IWebElement> options = selectDropdownLocation.FindElements(By.TagName("li"));
-
-                    foreach (IWebElement element in options)
-                    {
-                        string text = element.Text;
-                        if (element.Text.Contains("Australian Regional HQ"))
-                        {
-                            element.Click();
-                            break;
-                        }
-                            
-                    }
+                    Helper.getWebElementFromDropdown(selectDropdownLocation, "li", "Australian Regional HQ").Click();
 
                     break;
             }

@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System.Collections.ObjectModel;
 
 namespace consoleOrange.Pages
 {
@@ -31,29 +30,11 @@ namespace consoleOrange.Pages
         public void PressNextButton()
         {
             DropdownBloodGroup.Click();
-            ReadOnlyCollection<IWebElement> HoobiesOptions = DropdownBloodGroup.FindElements(By.TagName("li"));
-
-            foreach(IWebElement option in HoobiesOptions)
-            {
-                if (option.Text.Contains(BloodGroup))
-                {
-                    option.Click();
-                    break;
-                }
-            }
+            Helper.getWebElementFromDropdown(DropdownBloodGroup, "li", BloodGroup).Click();
 
             txtHobbie.SendKeys(Hobbies);
 
-            ReadOnlyCollection<IWebElement> buttonsNext = btnRegion.FindElements(By.TagName("button"));
-
-            foreach(IWebElement btnOption in buttonsNext)
-            {
-                if(btnOption.Text.Contains("NEXT"))
-                {
-                    btnOption.Click();
-                    break;
-                }
-            }
+            Helper.getWebElementFromDropdown(btnRegion, "button", "NEXT").Click();
         }
     }
 }

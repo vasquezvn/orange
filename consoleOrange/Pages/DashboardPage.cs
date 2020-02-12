@@ -7,12 +7,14 @@ namespace consoleOrange.Pages
         public enum DashboardOptions
         {
             Pim,
-            AddEmployee
+            AddEmployee,
+            EmployeeList,
         }
 
         #region IWebElements
         private static IWebElement menuPimView => Driver.Instance.FindElement(By.Id("menu_pim_viewPimModule"));
         private static IWebElement menuPimAddEmployee => Driver.Instance.FindElement(By.Id("menu_pim_addEmployee"));
+        private static IWebElement menuEmployeeList => Driver.Instance.FindElement(By.Id("menu_pim_viewEmployeeList"));
         #endregion
 
 
@@ -23,6 +25,12 @@ namespace consoleOrange.Pages
                 case DashboardOptions.AddEmployee:
                     menuPimView.Click();
                     menuPimAddEmployee.Click();
+
+                    break;
+
+                case DashboardOptions.EmployeeList:
+                    //menuPimView.Click();
+                    menuEmployeeList.Click();
 
                     break;
             }

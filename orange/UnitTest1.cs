@@ -26,9 +26,9 @@ namespace orange
 
             DashboardPage.GoToOption(DashboardOptions.AddEmployee);
 
-            DashboardPage.AddEmployeeAs("testUser")
+            DashboardPage.AddEmployeeAs("testUser1")
                 .WithLastName("testLastName")
-                .WithLocation(LocationOptions.NewYorkSalesOffice)
+                .WithLocation(LocationOptions.AustralianRegionalHQ)
                 .PressNextButton();
 
             PersonalDetailsPage.SetBloodGroup("A")
@@ -39,6 +39,12 @@ namespace orange
                 .WithFte("0.5")
                 .WithTemporaryDepartment("Sub unit-1")
                 .PressSaveBtn();
+
+            DashboardPage.GoToOption(DashboardOptions.EmployeeList);
+
+            bool searchResult = EmployeeListPage.SearchEmployee("testUser1");
+
+            Assert.IsTrue(searchResult, "User Can't Be Found");
         }
 
         [TestCleanup]
