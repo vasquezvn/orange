@@ -34,6 +34,11 @@ namespace orange
             PersonalDetailsPage.SetBloodGroup("A")
                 .WithHobbie("Art")
                 .PressNextButton();
+
+            JobPage.SetRegion("Region-1")
+                .WithFte("0.5")
+                .WithTemporaryDepartment("Sub unit-1")
+                .PressSaveBtn();
         }
 
         [TestCleanup]

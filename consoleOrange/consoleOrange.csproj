@@ -58,8 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Driver.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="Pages\DashboardPage.cs" />
     <Compile Include="Pages\DashboardPageCommand.cs" />
+    <Compile Include="Pages\JobCommand.cs" />
+    <Compile Include="Pages\JobPage.cs" />
     <Compile Include="Pages\LoginPage.cs" />
     <Compile Include="Pages\LoginPageCommand.cs" />
     <Compile Include="Pages\PersonalDetailsCommand.cs" />
