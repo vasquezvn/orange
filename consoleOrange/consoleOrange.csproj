@@ -62,6 +62,8 @@
     <Compile Include="Pages\DashboardPageCommand.cs" />
     <Compile Include="Pages\LoginPage.cs" />
     <Compile Include="Pages\LoginPageCommand.cs" />
+    <Compile Include="Pages\PersonalDetailsCommand.cs" />
+    <Compile Include="Pages\PersonalDetailsPage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -31,7 +31,9 @@ namespace orange
                 .WithLocation(LocationOptions.NewYorkSalesOffice)
                 .PressNextButton();
 
-
+            PersonalDetailsPage.SetBloodGroup("A")
+                .WithHobbie("Art")
+                .PressNextButton();
         }
 
         [TestCleanup]
