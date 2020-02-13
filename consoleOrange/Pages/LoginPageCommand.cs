@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 
 namespace consoleOrange.Pages
 {
@@ -29,13 +30,26 @@ namespace consoleOrange.Pages
 
         public void PressLoginButton()
         {
-            txtUsername.Clear();
-            txtUsername.SendKeys(userName);
+            try
+            {
+                txtUsername.Clear();
+                txtUsername.SendKeys(userName);
 
-            txtPassword.Clear();
-            txtPassword.SendKeys(password);
+                txtPassword.Clear();
+                txtPassword.SendKeys(password);
 
-            btnLogin.Click();
+                btnLogin.Click();
+            }
+            catch(NoSuchElementException element)
+            {
+                Console.WriteLine($"Element can't be found: {element.Message}");
+                throw;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Method PressLoginButton has errors: {ex.Message}");
+            }
+            
         }
     }
 }

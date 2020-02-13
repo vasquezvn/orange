@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 
 namespace consoleOrange.Pages
 {
@@ -20,19 +21,32 @@ namespace consoleOrange.Pages
 
         public static void GoToOption(DashboardOptions option)
         {
-            switch(option)
+            try
             {
-                case DashboardOptions.AddEmployee:
-                    menuPimView.Click();
-                    menuPimAddEmployee.Click();
+                switch (option)
+                {
+                    case DashboardOptions.AddEmployee:
+                        menuPimView.Click();
+                        menuPimAddEmployee.Click();
 
-                    break;
+                        break;
 
-                case DashboardOptions.EmployeeList:
-                    menuEmployeeList.Click();
+                    case DashboardOptions.EmployeeList:
+                        menuEmployeeList.Click();
 
-                    break;
+                        break;
+                }
             }
+            catch (NoSuchElementException element)
+            {
+                Console.WriteLine($"Element can't be found: {element.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Method GoToOption has errors: {ex.Message}");
+            }
+
         }
 
         public static DashboardPageCommand AddEmployeeAs(string firstName)

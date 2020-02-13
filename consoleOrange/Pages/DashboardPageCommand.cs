@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 
 namespace consoleOrange.Pages
 {
@@ -39,27 +40,51 @@ namespace consoleOrange.Pages
 
         public DashboardPageCommand WithLocation(LocationOptions option)
         {
-            Helper.WaitUntilElementExists(By.Id("location_inputfileddiv"));
-
-            switch(option)
+            try
             {
-                case LocationOptions.AustralianRegionalHQ:
-                    selectDropdownLocation.Click();
-                    Helper.getWebElementFromDropdown(selectDropdownLocation, "li", "Australian Regional HQ").Click();
+                Helper.WaitUntilElementExists(By.Id("location_inputfileddiv"));
 
-                    break;
+                switch (option)
+                {
+                    case LocationOptions.AustralianRegionalHQ:
+                        selectDropdownLocation.Click();
+                        Helper.getWebElementFromDropdown(selectDropdownLocation, "li", "Australian Regional HQ").Click();
+
+                        break;
+                }
             }
+            catch (NoSuchElementException element)
+            {
+                Console.WriteLine($"Element can't be found: {element.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Method PressLoginButton has errors: {ex.Message}");
+            }
+
 
             return this;
         }
 
         public void PressNextButton()
         {
-            txtFirstName.SendKeys(FirstName);
-            txtLastName.SendKeys(LastName);
+            try
+            {
+                txtFirstName.SendKeys(FirstName);
+                txtLastName.SendKeys(LastName);
 
-            btnNext.Click();
-
+                btnNext.Click();
+            }
+            catch (NoSuchElementException element)
+            {
+                Console.WriteLine($"Element can't be found: {element.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Method PressLoginButton has errors: {ex.Message}");
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 
 namespace consoleOrange.Pages
@@ -21,21 +22,34 @@ namespace consoleOrange.Pages
         public bool PressSearchBtn()
         {
             bool result = false;
-            txtSearchEmployee.SendKeys(EmployeeName);
-            iconSearch.Click();
 
-            IReadOnlyCollection<IWebElement> rowsEmployee = tableEmployeeList.FindElements(By.TagName("tr"));
-
-            if(rowsEmployee.Count > 0)
+            try
             {
-                foreach(IWebElement rowEmployee in rowsEmployee)
+                txtSearchEmployee.SendKeys(EmployeeName);
+                iconSearch.Click();
+
+                IReadOnlyCollection<IWebElement> rowsEmployee = tableEmployeeList.FindElements(By.TagName("tr"));
+
+                if (rowsEmployee.Count > 0)
                 {
-                    if(rowEmployee.Text.Contains(EmployeeName))
+                    foreach (IWebElement rowEmployee in rowsEmployee)
                     {
-                        result = true;
-                        break;
+                        if (rowEmployee.Text.Contains(EmployeeName))
+                        {
+                            result = true;
+                            break;
+                        }
                     }
                 }
+            }
+            catch (NoSuchElementException element)
+            {
+                Console.WriteLine($"Element can't be found: {element.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Method PressLoginButton has errors: {ex.Message}");
             }
 
             return result;

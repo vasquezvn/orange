@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 
 namespace consoleOrange.Pages
 {
@@ -41,20 +42,32 @@ namespace consoleOrange.Pages
 
         public void PressSaveBtn()
         {
-            Helper.ClickAndWaitForPageToLoad(DropdownRegion);
-            DropdownRegion.Click();
+            try
+            {
+                Helper.ClickAndWaitForPageToLoad(DropdownRegion);
+                DropdownRegion.Click();
 
-            Helper.getWebElementFromDropdown(DropdownRegion, "li", "Region-1").Click();
+                Helper.getWebElementFromDropdown(DropdownRegion, "li", "Region-1").Click();
 
-            DropdownFte.Click();
-            Helper.getWebElementFromDropdown(DropdownFte, "li", "0.5").Click();
+                DropdownFte.Click();
+                Helper.getWebElementFromDropdown(DropdownFte, "li", "0.5").Click();
 
-            DropdownTempDep.Click();
-            Helper.getWebElementFromDropdown(DropdownTempDep, "li", "Sub unit-1").Click();
+                DropdownTempDep.Click();
+                Helper.getWebElementFromDropdown(DropdownTempDep, "li", "Sub unit-1").Click();
 
-            Helper.getWebElementFromSetOptions(BtnsWizard, "button").Click();
+                Helper.getWebElementFromSetOptions(BtnsWizard, "button").Click();
 
-            Helper.WaitUntilElementVisible(By.Id("toast-container"));
+                Helper.WaitUntilElementVisible(By.Id("toast-container"));
+            }
+            catch (NoSuchElementException element)
+            {
+                Console.WriteLine($"Element can't be found: {element.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Method PressLoginButton has errors: {ex.Message}");
+            }
 
         }
     }

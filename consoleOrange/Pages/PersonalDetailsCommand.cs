@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 
 namespace consoleOrange.Pages
 {
@@ -29,14 +30,26 @@ namespace consoleOrange.Pages
 
         public void PressNextButton()
         {
-            Helper.WaitUntilElementExists(By.Id("1_inputfileddiv"));
-            DropdownBloodGroup.Click();
-            Helper.getWebElementFromDropdown(DropdownBloodGroup, "li", BloodGroup).Click();
+            try
+            {
+                Helper.WaitUntilElementExists(By.Id("1_inputfileddiv"));
+                DropdownBloodGroup.Click();
+                Helper.getWebElementFromDropdown(DropdownBloodGroup, "li", BloodGroup).Click();
 
-            txtHobbie.SendKeys(Hobbies);
+                txtHobbie.SendKeys(Hobbies);
 
-            Helper.WaitUntilElementExists(By.Id("wizard-nav-button-section"));
-            Helper.getWebElementFromSetOptions(btnRegion, "button").Click();
+                Helper.WaitUntilElementExists(By.Id("wizard-nav-button-section"));
+                Helper.getWebElementFromSetOptions(btnRegion, "button").Click();
+            }
+            catch (NoSuchElementException element)
+            {
+                Console.WriteLine($"Element can't be found: {element.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Method PressLoginButton has errors: {ex.Message}");
+            }
         }
     }
 }
