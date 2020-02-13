@@ -2,11 +2,13 @@
 using System.Collections.ObjectModel;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.IO;
 
 namespace consoleOrange
 {
     public class Helper
     {
+        private static string LogsPath = new DirectoryInfo(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\consoleOrange\Logs"))).ToString();
         public static IWebElement getWebElementFromDropdown(IWebElement element, string tagName, string contains)
         {
             IWebElement result = null;
@@ -156,6 +158,12 @@ namespace consoleOrange
             {
                 Driver.Instance.SwitchTo().ParentFrame();
             }
+        }
+
+        public static void TakeErrorScreenshot()
+        {
+            var logPathName = LogsPath + @"\ErrorScreenshot_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".png";
+            ((ITakesScreenshot)Driver.Instance).GetScreenshot().SaveAsFile(logPathName, ScreenshotImageFormat.Png);
         }
     }
 }

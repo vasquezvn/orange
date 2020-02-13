@@ -42,11 +42,13 @@ namespace consoleOrange.Pages
             }
             catch(NoSuchElementException element)
             {
+                Helper.TakeErrorScreenshot();
                 Console.WriteLine($"Element can't be found: {element.Message}");
                 throw;
             }
             catch(Exception ex)
             {
+                Helper.TakeErrorScreenshot();
                 Console.WriteLine($"Method PressLoginButton has errors: {ex.Message}");
             }
             

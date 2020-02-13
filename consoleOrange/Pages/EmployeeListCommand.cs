@@ -28,6 +28,7 @@ namespace consoleOrange.Pages
                 txtSearchEmployee.SendKeys(EmployeeName);
                 iconSearch.Click();
 
+                Helper.WaitUntilElementExists(By.TagName("tr"));
                 IReadOnlyCollection<IWebElement> rowsEmployee = tableEmployeeList.FindElements(By.TagName("tr"));
 
                 if (rowsEmployee.Count > 0)
@@ -44,11 +45,13 @@ namespace consoleOrange.Pages
             }
             catch (NoSuchElementException element)
             {
+                Helper.TakeErrorScreenshot();
                 Console.WriteLine($"Element can't be found: {element.Message}");
                 throw;
             }
             catch (Exception ex)
             {
+                Helper.TakeErrorScreenshot();
                 Console.WriteLine($"Method PressLoginButton has errors: {ex.Message}");
             }
 
