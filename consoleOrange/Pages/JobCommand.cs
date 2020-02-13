@@ -14,6 +14,10 @@ namespace consoleOrange.Pages
         private static IWebElement DropdownTempDep => Driver.Instance.FindElement(By.Id("11_inputfileddiv"));
 
         private static IWebElement BtnsWizard => Driver.Instance.FindElement(By.Id("wizard-nav-button-section"));
+        private static IWebElement SuccessPopup => Driver.Instance.FindElement(By.Id("toast-container"));
+
+        private static IWebElement IframeElement => Driver.Instance.FindElement(By.Id("xh-bar"));
+
         #endregion
 
         public JobCommand(string Region)
@@ -37,6 +41,7 @@ namespace consoleOrange.Pages
 
         public void PressSaveBtn()
         {
+            Helper.ClickAndWaitForPageToLoad(DropdownRegion);
             DropdownRegion.Click();
 
             Helper.getWebElementFromDropdown(DropdownRegion, "li", "Region-1").Click();
@@ -47,7 +52,9 @@ namespace consoleOrange.Pages
             DropdownTempDep.Click();
             Helper.getWebElementFromDropdown(DropdownTempDep, "li", "Sub unit-1").Click();
 
-            Helper.getWebElementFromDropdown(BtnsWizard, "button", "SAVE").Click();
+            Helper.getWebElementFromSetOptions(BtnsWizard, "button").Click();
+
+            Helper.WaitUntilElementVisible(By.Id("toast-container"));
 
         }
     }

@@ -39,6 +39,8 @@ namespace consoleOrange.Pages
 
         public DashboardPageCommand WithLocation(LocationOptions option)
         {
+            Helper.WaitUntilElementExists(By.Id("location_inputfileddiv"));
+
             switch(option)
             {
                 case LocationOptions.AustralianRegionalHQ:

@@ -29,7 +29,6 @@ namespace consoleOrange.Pages
                     break;
 
                 case DashboardOptions.EmployeeList:
-                    //menuPimView.Click();
                     menuEmployeeList.Click();
 
                     break;

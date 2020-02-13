@@ -29,12 +29,14 @@ namespace consoleOrange.Pages
 
         public void PressNextButton()
         {
+            Helper.WaitUntilElementExists(By.Id("1_inputfileddiv"));
             DropdownBloodGroup.Click();
             Helper.getWebElementFromDropdown(DropdownBloodGroup, "li", BloodGroup).Click();
 
             txtHobbie.SendKeys(Hobbies);
 
-            Helper.getWebElementFromDropdown(btnRegion, "button", "NEXT").Click();
+            Helper.WaitUntilElementExists(By.Id("wizard-nav-button-section"));
+            Helper.getWebElementFromSetOptions(btnRegion, "button").Click();
         }
     }
 }
