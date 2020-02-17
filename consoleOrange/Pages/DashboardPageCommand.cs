@@ -43,28 +43,30 @@ namespace consoleOrange.Pages
             try
             {
                 Helper.WaitUntilElementExists(By.Id("location_inputfileddiv"));
+            }
+            catch(Exception ex)
+            {
+                Helper.TakeErrorScreenshot();
+                throw new Exception($"Location Dropdown WebElement from Add Employee form is not found. \nDetails:\n{ex.Message}");
+            }
+            
 
-                switch (option)
-                {
-                    case LocationOptions.AustralianRegionalHQ:
+            switch (option)
+            {
+                case LocationOptions.AustralianRegionalHQ:
+                    try
+                    {
                         selectDropdownLocation.Click();
                         Helper.getWebElementFromDropdown(selectDropdownLocation, "li", "Australian Regional HQ").Click();
-
-                        break;
-                }
+                    }
+                    catch(Exception ex)
+                    {
+                        Helper.TakeErrorScreenshot();
+                        throw new Exception($"Location Dropdown WebElement from Add Employee form is not found. \nDetails:\n{ex.Message}");
+                    }
+                    
+                    break;
             }
-            catch (NoSuchElementException element)
-            {
-                Helper.TakeErrorScreenshot();
-                Console.WriteLine($"Element can't be found: {element.Message}");
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Helper.TakeErrorScreenshot();
-                Console.WriteLine($"Method PressLoginButton has errors: {ex.Message}");
-            }
-
 
             return this;
         }
@@ -74,20 +76,31 @@ namespace consoleOrange.Pages
             try
             {
                 txtFirstName.SendKeys(FirstName);
-                txtLastName.SendKeys(LastName);
+            }
+            catch(Exception ex)
+            {
+                Helper.TakeErrorScreenshot();
+                throw new Exception($"First Name WebElement from Add Employee form is not found. \nDetails:\n{ex.Message}");
+            }
 
+            try
+            {
+                txtLastName.SendKeys(LastName);
+            }
+            catch(Exception ex)
+            {
+                Helper.TakeErrorScreenshot();
+                throw new Exception($"Last Name WebElement from Add Employee form is not found. \nDetails:\n{ex.Message}");
+            }
+
+            try
+            {
                 btnNext.Click();
             }
-            catch (NoSuchElementException element)
+            catch(Exception ex)
             {
                 Helper.TakeErrorScreenshot();
-                Console.WriteLine($"Element can't be found: {element.Message}");
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Helper.TakeErrorScreenshot();
-                Console.WriteLine($"Method PressLoginButton has errors: {ex.Message}");
+                throw new Exception($"Next button WebElement from Add Employee form is not found. \nDetails:\n{ex.Message}");
             }
         }
     }

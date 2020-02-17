@@ -21,32 +21,43 @@ namespace consoleOrange.Pages
 
         public static void GoToOption(DashboardOptions option)
         {
-            try
+            switch (option)
             {
-                switch (option)
-                {
-                    case DashboardOptions.AddEmployee:
+                case DashboardOptions.AddEmployee:
+                    try
+                    {
                         menuPimView.Click();
+                    }
+                    catch(Exception ex)
+                    {
+                        Helper.TakeErrorScreenshot();
+                        throw new Exception($"PIM WebElement from Side Menu is not found. \nDetails:\n{ex.Message}");
+                    }
+
+                    try
+                    {
                         menuPimAddEmployee.Click();
+                    }
+                    catch (Exception ex)
+                    {
+                        Helper.TakeErrorScreenshot();
+                        throw new Exception($"PIM > Add Employee WebElement from Side Menu is not found. \nDetails:\n{ex.Message}");
+                    }
 
-                        break;
+                    break;
 
-                    case DashboardOptions.EmployeeList:
+                case DashboardOptions.EmployeeList:
+                    try
+                    {
                         menuEmployeeList.Click();
-
-                        break;
-                }
-            }
-            catch (NoSuchElementException element)
-            {
-                Helper.TakeErrorScreenshot();
-                Console.WriteLine($"Element can't be found: {element.Message}");
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Helper.TakeErrorScreenshot();
-                Console.WriteLine($"Method GoToOption has errors: {ex.Message}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Helper.TakeErrorScreenshot();
+                        throw new Exception($"PIM > Employee List WebElement from Side Menu is not found. \nDetails:\n{ex.Message}");
+                    }
+                        
+                    break;
             }
 
         }

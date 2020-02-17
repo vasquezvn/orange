@@ -34,22 +34,32 @@ namespace consoleOrange.Pages
             {
                 txtUsername.Clear();
                 txtUsername.SendKeys(userName);
-
-                txtPassword.Clear();
-                txtPassword.SendKeys(password);
-
-                btnLogin.Click();
-            }
-            catch(NoSuchElementException element)
-            {
-                Helper.TakeErrorScreenshot();
-                Console.WriteLine($"Element can't be found: {element.Message}");
-                throw;
             }
             catch(Exception ex)
             {
                 Helper.TakeErrorScreenshot();
-                Console.WriteLine($"Method PressLoginButton has errors: {ex.Message}");
+                throw new Exception($"User Name WebElement from Login Page is not found. \nDetails:\n{ex.Message}");
+            }
+
+            try
+            {
+                txtPassword.Clear();
+                txtPassword.SendKeys(password);
+            }
+            catch(Exception ex)
+            {
+                Helper.TakeErrorScreenshot();
+                throw new Exception($"Password WebElement from Login Page is not found. \nDetails:\n{ex.Message}");
+            }
+
+            try
+            {
+                btnLogin.Click();
+            }
+            catch(Exception ex)
+            {
+                Helper.TakeErrorScreenshot();
+                throw new Exception($"Login button WebElement from Login Page is not found. \nDetails:\n{ex.Message}");
             }
             
         }
