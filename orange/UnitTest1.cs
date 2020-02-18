@@ -15,7 +15,7 @@ namespace orange
             Driver.Initialize();
         }
 
-        [TestMethod]
+        /*[TestMethod]
         public void TestMethod1()
         {
             LoginPage.GoTo();
@@ -45,9 +45,9 @@ namespace orange
             bool searchResult = EmployeeListPage.SearchEmployee("testUser1");
 
             Assert.IsTrue(searchResult, "User Can't Be Found");
-        }
+        }*/
 
-        [TestMethod]
+        /*[TestMethod]
         public void VerifySaveButton()
         {
             LoginPage.GoTo();
@@ -59,7 +59,7 @@ namespace orange
             DashboardPage.GoToOption(DashboardOptions.AddEmployee);
 
             Assert.IsTrue(DashboardPage.IsSaveButtonDisplayed(), "Save button is not displayed on Add Employee form");
-        }
+        }*/
 
         [TestMethod]
         public void VerifiedDivorcedOption()

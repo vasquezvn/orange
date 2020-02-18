@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.Collections.ObjectModel;
 
 namespace consoleOrange.Pages
 {
@@ -11,11 +12,35 @@ namespace consoleOrange.Pages
         #region IWebElements
         private static IWebElement DropdownBloodGroup => Driver.Instance.FindElement(By.Id("1_inputfileddiv"));
         private static IWebElement txtHobbie => Driver.Instance.FindElement(By.Id("5"));
+        private static IWebElement DropdownMaritalStatus => Driver.Instance.FindElement(By.Id("emp_marital_status_inputfileddiv"));
 
         internal bool IsDivorcedOptionAvailable()
         {
             bool result = false;
+            Helper.WaitUntilElementExists(By.Id("emp_marital_status_inputfileddiv"));
 
+            try
+            {
+                DropdownMaritalStatus.Click();
+            }
+            catch (Exception ex)
+            {
+                Helper.TakeErrorScreenshot();
+                throw new Exception($"Marital Status Dropdown WebElement from Login Page is not found. \nDetails:\n{ex.Message}");
+            }
+
+
+
+            ReadOnlyCollection<IWebElement> options = DropdownMaritalStatus.FindElements(By.TagName("li"));
+
+            foreach (IWebElement option in options)
+            {
+                if (option.Text.Contains("Divorced"))
+                {
+                    result = true;
+                    break;
+                }
+            }
 
 
             return result;
