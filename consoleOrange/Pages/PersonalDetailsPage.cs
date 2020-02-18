@@ -1,4 +1,6 @@
-﻿namespace consoleOrange.Pages
+﻿using System;
+
+namespace consoleOrange.Pages
 {
     public class PersonalDetailsPage
     {
@@ -7,5 +9,9 @@
             return new PersonalDetailsCommand(Bloodgroup);
         }
 
+        public static bool IsDivorcedOptionAvailable()
+        {
+            return new PersonalDetailsCommand().IsDivorcedOptionAvailable();
+        }
     }
 }

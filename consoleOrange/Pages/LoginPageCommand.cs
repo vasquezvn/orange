@@ -19,39 +19,39 @@ namespace consoleOrange.Pages
         public LoginPageCommand(string userName)
         {
             this.userName = userName;
+
+            try
+            {
+                txtUsername.Clear();
+                txtUsername.SendKeys(userName);
+            }
+            catch (Exception ex)
+            {
+                Helper.TakeErrorScreenshot();
+                throw new Exception($"User Name WebElement from Login Page is not found. \nDetails:\n{ex.Message}");
+            }
         }
 
         public LoginPageCommand WithPassword(string password)
         {
             this.password = password;
 
-            return this;
-        }
-
-        public void PressLoginButton()
-        {
-            try
-            {
-                txtUsername.Clear();
-                txtUsername.SendKeys(userName);
-            }
-            catch(Exception ex)
-            {
-                Helper.TakeErrorScreenshot();
-                throw new Exception($"User Name WebElement from Login Page is not found. \nDetails:\n{ex.Message}");
-            }
-
             try
             {
                 txtPassword.Clear();
                 txtPassword.SendKeys(password);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Helper.TakeErrorScreenshot();
                 throw new Exception($"Password WebElement from Login Page is not found. \nDetails:\n{ex.Message}");
             }
 
+            return this;
+        }
+
+        public void PressLoginButton()
+        {
             try
             {
                 btnLogin.Click();

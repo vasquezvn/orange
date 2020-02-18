@@ -62,6 +62,11 @@ namespace consoleOrange.Pages
 
         }
 
+        public static bool IsSaveButtonDisplayed()
+        {
+            return new DashboardPageCommand().IsButtonDisplayed();
+        }
+
         public static DashboardPageCommand AddEmployeeAs(string firstName)
         {
             return new DashboardPageCommand(firstName);

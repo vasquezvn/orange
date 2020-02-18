@@ -31,6 +31,10 @@ namespace consoleOrange.Pages
             this.FirstName = FirstName;
         }
 
+        public DashboardPageCommand()
+        {
+        }
+
         public DashboardPageCommand WithLastName(string LastName)
         {
             this.LastName = LastName;
@@ -69,6 +73,25 @@ namespace consoleOrange.Pages
             }
 
             return this;
+        }
+
+        internal bool IsButtonDisplayed()
+        {
+            Helper.WaitUntilElementVisible(By.Id("systemUserSaveBtn"));
+            bool result = false;
+
+            try
+            {
+                result = btnNext.Displayed;
+            }
+            catch (Exception ex)
+            {
+                Helper.TakeErrorScreenshot();
+                throw new Exception($"Save Button WebElement from Add Employee form is not found. \nDetails:\n{ex.Message}");
+            }
+
+
+            return result;
         }
 
         public void PressNextButton()

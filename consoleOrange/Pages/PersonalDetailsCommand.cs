@@ -11,6 +11,16 @@ namespace consoleOrange.Pages
         #region IWebElements
         private static IWebElement DropdownBloodGroup => Driver.Instance.FindElement(By.Id("1_inputfileddiv"));
         private static IWebElement txtHobbie => Driver.Instance.FindElement(By.Id("5"));
+
+        internal bool IsDivorcedOptionAvailable()
+        {
+            bool result = false;
+
+
+
+            return result;
+        }
+
         private static IWebElement btnRegion => Driver.Instance.FindElement(By.Id("wizard-nav-button-section"));
 
 
@@ -19,6 +29,10 @@ namespace consoleOrange.Pages
         public PersonalDetailsCommand(string BloodGroup)
         {
             this.BloodGroup = BloodGroup;
+        }
+
+        public PersonalDetailsCommand()
+        {
         }
 
         public PersonalDetailsCommand WithHobbie(string Hobbies)

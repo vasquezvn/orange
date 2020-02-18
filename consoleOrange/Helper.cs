@@ -144,14 +144,9 @@ namespace consoleOrange
                 var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(timeout));
                 wait.Until(ExpectedConditions.ElementIsVisible(elementLocator));
             }
-            catch(NoSuchElementException)
-            {
-                Console.WriteLine($"Element with locator: {elementLocator} was not found in current context page");
-                throw;
-            }
             catch (Exception ex)
             {
-                Console.WriteLine($"WaitUntilElementVisible method is failing due {ex.Message}");
+                throw new Exception($"Element with locator: {elementLocator} was not found in current context page");
             }
 
             if(iframeElement != null)
