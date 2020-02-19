@@ -47,7 +47,7 @@ namespace orange
             Assert.IsTrue(searchResult, "User Can't Be Found");
         }*/
 
-        /*[TestMethod]
+        [TestMethod]
         public void VerifySaveButton()
         {
             LoginPage.GoTo();
@@ -59,7 +59,7 @@ namespace orange
             DashboardPage.GoToOption(DashboardOptions.AddEmployee);
 
             Assert.IsTrue(DashboardPage.IsSaveButtonDisplayed(), "Save button is not displayed on Add Employee form");
-        }*/
+        }
 
         [TestMethod]
         public void VerifiedDivorcedOption()
