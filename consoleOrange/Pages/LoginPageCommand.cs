@@ -5,11 +5,7 @@ namespace consoleOrange.Pages
 {
     public class LoginPageCommand
     {
-        private string userName;
-        private string password;
-
         #region IWebElements
-
         private static IWebElement txtUsername => Driver.Instance.FindElement(By.Id("txtUsername"));
         private static IWebElement txtPassword => Driver.Instance.FindElement(By.Id("txtPassword"));
         private static IWebElement btnLogin => Driver.Instance.FindElement(By.Id("btnLogin"));
@@ -18,8 +14,6 @@ namespace consoleOrange.Pages
 
         public LoginPageCommand(string userName)
         {
-            this.userName = userName;
-
             try
             {
                 txtUsername.Clear();
@@ -34,8 +28,6 @@ namespace consoleOrange.Pages
 
         public LoginPageCommand WithPassword(string password)
         {
-            this.password = password;
-
             try
             {
                 txtPassword.Clear();

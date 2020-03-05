@@ -5,37 +5,73 @@ namespace consoleOrange.Pages
 {
     public class JobCommand
     {
-        private string Region;
-        private string Fte;
-        private string TemporaryDepartment;
+
+        #region Locators
+        private static By locatorSuccessPopup => By.Id("toast-container");
+        private static By locatorDropdownFte => By.Id("10_inputfileddiv");
+        private static By locatorDropdownRegion => By.Id("9_inputfileddiv");
+        private static By locatorDropdownTempDep => By.Id("11_inputfileddiv");
+        #endregion
 
         #region IWebElements
-        private static IWebElement DropdownRegion => Driver.Instance.FindElement(By.Id("9_inputfileddiv"));
-        private static IWebElement DropdownFte => Driver.Instance.FindElement(By.Id("10_inputfileddiv"));
-        private static IWebElement DropdownTempDep => Driver.Instance.FindElement(By.Id("11_inputfileddiv"));
-
+        private static IWebElement DropdownRegion => Driver.Instance.FindElement(locatorDropdownRegion);
+        private static IWebElement DropdownFte => Driver.Instance.FindElement(locatorDropdownFte);
+        private static IWebElement DropdownTempDep => Driver.Instance.FindElement(locatorDropdownTempDep);
         private static IWebElement BtnsWizard => Driver.Instance.FindElement(By.Id("wizard-nav-button-section"));
-        private static IWebElement SuccessPopup => Driver.Instance.FindElement(By.Id("toast-container"));
-
-        private static IWebElement IframeElement => Driver.Instance.FindElement(By.Id("xh-bar"));
 
         #endregion
 
-        public JobCommand(string Region)
+        public JobCommand(string region)
         {
-            this.Region = Region;
+            //Helper.ClickAndWaitForPageToLoad(BtnsWizard);
+            Helper.WaitUntilElementClickable(locatorDropdownRegion);
+            //Helper.WaitUntilElementClickable(locatorDropdownRegion, 20);
+
+            try
+            {
+                DropdownRegion.Click();
+                Helper.getWebElementFromDropdown(DropdownRegion, region).Click();
+            }
+            catch (Exception ex)
+            {
+                Helper.TakeErrorScreenshot();
+                throw new Exception($"Region Dropdown WebElement from JobCommand Page is not found. \nDetails:\n{ex.Message}");
+            }
+            
         }
 
-        public JobCommand WithFte(string Fte)
+        public JobCommand WithFte(string fte)
         {
-            this.Fte = Fte;
+            Helper.WaitUntilElementExists(locatorDropdownFte);
+
+            try
+            {
+                DropdownFte.Click();
+                Helper.getWebElementFromDropdown(DropdownFte, fte).Click();
+            }
+            catch (Exception ex)
+            {
+                Helper.TakeErrorScreenshot();
+                throw new Exception($"Fte dropdown WebElement from JobCommand Page is not found. \nDetails:\n{ex.Message}");
+            }
 
             return this;
         }
 
         public JobCommand WithTemporaryDepartment(string TemporaryDepartment)
         {
-            this.TemporaryDepartment = TemporaryDepartment;
+            Helper.WaitUntilElementExists(locatorDropdownTempDep);
+
+            try
+            {
+                DropdownTempDep.Click();
+                Helper.getWebElementFromDropdown(DropdownTempDep, TemporaryDepartment).Click();
+            }
+            catch (Exception ex)
+            {
+                Helper.TakeErrorScreenshot();
+                throw new Exception($"Temporary Department dropdown WebElement from JobCommand Page is not found. \nDetails:\n{ex.Message}");
+            }
 
             return this;
         }
@@ -44,33 +80,15 @@ namespace consoleOrange.Pages
         {
             try
             {
-                Helper.ClickAndWaitForPageToLoad(DropdownRegion);
-                DropdownRegion.Click();
-
-                Helper.getWebElementFromDropdown(DropdownRegion, "li", "Region-1").Click();
-
-                DropdownFte.Click();
-                Helper.getWebElementFromDropdown(DropdownFte, "li", "0.5").Click();
-
-                DropdownTempDep.Click();
-                Helper.getWebElementFromDropdown(DropdownTempDep, "li", "Sub unit-1").Click();
-
                 Helper.getWebElementFromSetOptions(BtnsWizard, "button").Click();
-
-                Helper.WaitUntilElementVisible(By.Id("toast-container"));
-            }
-            catch (NoSuchElementException element)
-            {
-                Helper.TakeErrorScreenshot();
-                Console.WriteLine($"Element can't be found: {element.Message}");
-                throw;
             }
             catch (Exception ex)
             {
                 Helper.TakeErrorScreenshot();
-                Console.WriteLine($"Method PressLoginButton has errors: {ex.Message}");
+                throw new Exception($"Save button WebElement from JobCommand Page is not found. \nDetails:\n{ex.Message}");
             }
 
+            //Helper.WaitUntilElementVisible(locatorSuccessPopup);
         }
     }
 }

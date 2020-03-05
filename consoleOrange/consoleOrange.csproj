@@ -59,14 +59,15 @@
   <ItemGroup>
     <Compile Include="Driver.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="Pages\DashboardPage.cs" />
-    <Compile Include="Pages\DashboardPageCommand.cs" />
+    <Compile Include="Pages\AddEmployeePage.cs" />
+    <Compile Include="Pages\AddEmployeePageCommand.cs" />
     <Compile Include="Pages\EmployeeListCommand.cs" />
     <Compile Include="Pages\EmployeeListPage.cs" />
     <Compile Include="Pages\JobCommand.cs" />
     <Compile Include="Pages\JobPage.cs" />
     <Compile Include="Pages\LoginPage.cs" />
     <Compile Include="Pages\LoginPageCommand.cs" />
+    <Compile Include="Pages\MenuPage.cs" />
     <Compile Include="Pages\PersonalDetailsCommand.cs" />
     <Compile Include="Pages\PersonalDetailsPage.cs" />
     <Compile Include="Program.cs" />

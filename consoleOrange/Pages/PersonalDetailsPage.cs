@@ -9,9 +9,9 @@ namespace consoleOrange.Pages
             return new PersonalDetailsCommand(Bloodgroup);
         }
 
-        public static bool IsDivorcedOptionAvailable()
+        public static bool IsMaritalStatusOptionAvailable(string maritalStatusOption)
         {
-            return new PersonalDetailsCommand().IsDivorcedOptionAvailable();
+            return new PersonalDetailsCommand().IsMaritalStatusOptionAvailable(maritalStatusOption);
         }
     }
 }

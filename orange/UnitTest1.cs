@@ -1,8 +1,8 @@
 ﻿using consoleOrange;
 using consoleOrange.Pages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static consoleOrange.Pages.DashboardPage;
-using static consoleOrange.Pages.DashboardPageCommand;
+using static consoleOrange.Pages.AddEmployeePageCommand;
+using static consoleOrange.Pages.MenuPage;
 
 namespace orange
 {
@@ -15,18 +15,20 @@ namespace orange
             Driver.Initialize();
         }
 
-        /*[TestMethod]
-        public void TestMethod1()
+        [TestMethod]
+        public void SearchNewEmployee()
         {
+            string userName = $"testUser{Helper.RandomNumber(2, 100)}";
+
             LoginPage.GoTo();
 
             LoginPage.LoginAs("admin")
                 .WithPassword("admin123")
                 .PressLoginButton();
 
-            DashboardPage.GoToOption(DashboardOptions.AddEmployee);
+            MenuPage.GoToOption(MenuOptions.AddEmployee);
 
-            DashboardPage.AddEmployeeAs("testUser1")
+            AddEmployeePage.AddEmployeeAs(userName)
                 .WithLastName("testLastName")
                 .WithLocation(LocationOptions.AustralianRegionalHQ)
                 .PressNextButton();
@@ -40,44 +42,46 @@ namespace orange
                 .WithTemporaryDepartment("Sub unit-1")
                 .PressSaveBtn();
 
-            DashboardPage.GoToOption(DashboardOptions.EmployeeList);
+            MenuPage.GoToOption(MenuOptions.EmployeeList);
 
-            bool searchResult = EmployeeListPage.SearchEmployee("testUser1");
+            bool searchResult = EmployeeListPage.SearchEmployee(userName);
 
             Assert.IsTrue(searchResult, "User Can't Be Found");
-        }*/
-
-        [TestMethod]
-        public void VerifySaveButton()
-        {
-            LoginPage.GoTo();
-
-            LoginPage.LoginAs("admin")
-                .WithPassword("admin123")
-                .PressLoginButton();
-
-            DashboardPage.GoToOption(DashboardOptions.AddEmployee);
-
-            Assert.IsTrue(DashboardPage.IsSaveButtonDisplayed(), "Save button is not displayed on Add Employee form");
         }
 
         [TestMethod]
-        public void VerifiedDivorcedOption()
+        public void VerifyButtonIsDisplayed()
         {
+            var textButton = "Save";
             LoginPage.GoTo();
 
             LoginPage.LoginAs("admin")
                 .WithPassword("admin123")
                 .PressLoginButton();
 
-            DashboardPage.GoToOption(DashboardOptions.AddEmployee);
+            MenuPage.GoToOption(MenuOptions.AddEmployee);
 
-            DashboardPage.AddEmployeeAs("testUser1")
+            Assert.IsTrue(AddEmployeePage.IsSaveButtonDisplayed(textButton), $"{textButton} button is not displayed on Add Employee form");
+        }
+
+        [TestMethod]
+        public void VerifyMaritalStatusOption()
+        {
+            var maritalStatusOption = "Divorced";
+            LoginPage.GoTo();
+
+            LoginPage.LoginAs("admin")
+                .WithPassword("admin123")
+                .PressLoginButton();
+
+            MenuPage.GoToOption(MenuOptions.AddEmployee);
+
+            AddEmployeePage.AddEmployeeAs("testUser1")
                 .WithLastName("testLastName")
                 .WithLocation(LocationOptions.AustralianRegionalHQ)
                 .PressNextButton();
 
-            Assert.IsTrue(PersonalDetailsPage.IsDivorcedOptionAvailable(), "Divorced Option is not found in Dropdown Marital Status");
+            Assert.IsTrue(PersonalDetailsPage.IsMaritalStatusOptionAvailable(maritalStatusOption), $"{maritalStatusOption} option is not found in Dropdown Marital Status");
         }
 
         [TestCleanup]

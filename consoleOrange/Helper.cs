@@ -9,10 +9,12 @@ namespace consoleOrange
     public class Helper
     {
         private static string LogsPath = new DirectoryInfo(Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\consoleOrange\Logs"))).ToString();
-        public static IWebElement getWebElementFromDropdown(IWebElement element, string tagName, string contains)
+
+
+        public static IWebElement getWebElementFromDropdown(IWebElement element, string contains)
         {
             IWebElement result = null;
-            ReadOnlyCollection<IWebElement> options = element.FindElements(By.TagName(tagName));
+            ReadOnlyCollection<IWebElement> options = element.FindElements(By.TagName("li"));
 
             foreach (IWebElement option in options)
             {
@@ -160,5 +162,12 @@ namespace consoleOrange
             var logPathName = LogsPath + @"\ErrorScreenshot_" + DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + ".png";
             ((ITakesScreenshot)Driver.Instance).GetScreenshot().SaveAsFile(logPathName, ScreenshotImageFormat.Png);
         }
+
+        public static int RandomNumber(int min, int max)
+        {
+            Random random = new Random();
+            return random.Next(min, max);
+        }
+
     }
 }

@@ -1,11 +1,15 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace consoleOrange.Pages
 {
-    public class DashboardPage
+    public class MenuPage
     {
-        public enum DashboardOptions
+        public enum MenuOptions
         {
             Pim,
             AddEmployee,
@@ -19,16 +23,16 @@ namespace consoleOrange.Pages
         #endregion
 
 
-        public static void GoToOption(DashboardOptions option)
+        public static void GoToOption(MenuOptions option)
         {
             switch (option)
             {
-                case DashboardOptions.AddEmployee:
+                case MenuOptions.AddEmployee:
                     try
                     {
                         menuPimView.Click();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Helper.TakeErrorScreenshot();
                         throw new Exception($"PIM WebElement from Side Menu is not found. \nDetails:\n{ex.Message}");
@@ -46,7 +50,7 @@ namespace consoleOrange.Pages
 
                     break;
 
-                case DashboardOptions.EmployeeList:
+                case MenuOptions.EmployeeList:
                     try
                     {
                         menuEmployeeList.Click();
@@ -56,23 +60,11 @@ namespace consoleOrange.Pages
                         Helper.TakeErrorScreenshot();
                         throw new Exception($"PIM > Employee List WebElement from Side Menu is not found. \nDetails:\n{ex.Message}");
                     }
-                        
+
                     break;
             }
 
         }
-
-        public static bool IsSaveButtonDisplayed()
-        {
-            return new DashboardPageCommand().IsButtonDisplayed();
-        }
-
-        public static DashboardPageCommand AddEmployeeAs(string firstName)
-        {
-            return new DashboardPageCommand(firstName);
-        }
-
-
 
     }
 }

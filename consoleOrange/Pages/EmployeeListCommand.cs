@@ -12,11 +12,22 @@ namespace consoleOrange.Pages
         private static IWebElement txtSearchEmployee => Driver.Instance.FindElement(By.Id("employee_name_quick_filter_employee_list_value"));
         private static IWebElement iconSearch => Driver.Instance.FindElement(By.Id("quick_search_icon"));
         private static IWebElement tableEmployeeList => Driver.Instance.FindElement(By.Id("employeeListTable"));
+
         #endregion
 
         public EmployeeListCommand(string EmployeeName)
         {
             this.EmployeeName = EmployeeName;
+
+            try
+            {
+                txtSearchEmployee.SendKeys(EmployeeName);
+            }
+            catch (Exception ex)
+            {
+                Helper.TakeErrorScreenshot();
+                throw new Exception($"Search Employee WebElement from EmployeeList page is not found. \nDetails:\n{ex.Message}");
+            }
         }
 
         public bool PressSearchBtn()
@@ -25,7 +36,6 @@ namespace consoleOrange.Pages
 
             try
             {
-                txtSearchEmployee.SendKeys(EmployeeName);
                 iconSearch.Click();
 
                 Helper.WaitUntilElementExists(By.TagName("tr"));
@@ -43,16 +53,10 @@ namespace consoleOrange.Pages
                     }
                 }
             }
-            catch (NoSuchElementException element)
-            {
-                Helper.TakeErrorScreenshot();
-                Console.WriteLine($"Element can't be found: {element.Message}");
-                throw;
-            }
             catch (Exception ex)
             {
                 Helper.TakeErrorScreenshot();
-                Console.WriteLine($"Method PressLoginButton has errors: {ex.Message}");
+                throw new Exception($"Search button WebElement from EmployeeList page is not found. \nDetails:\n{ex.Message}");
             }
 
             return result;
