@@ -32,7 +32,7 @@ namespace consoleOrange.Pages
             //Helper.WaitUntilElementVisible(locatorDropdownRegion);
             //Helper.ScrollToView(locatorDropdownRegion);
 
-            Thread.Sleep(10000);
+            Thread.Sleep(20000);
 
             try
             {

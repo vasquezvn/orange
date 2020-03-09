@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 using System.Collections.ObjectModel;
 
 namespace consoleOrange.Pages
@@ -11,7 +12,9 @@ namespace consoleOrange.Pages
 
         public void PressSaveButton()
         {
-            Helper.WaitUntilElementExists(locatorBtnSection);
+            //Helper.WaitUntilElementExists(locatorBtnSection);
+            //Helper.WaitUntilElementClickable(locatorBtnSection);
+            //Helper.WaitUntilElementVisible(locatorBtnSection);
 
             ReadOnlyCollection<IWebElement> btnCollection = btnSection.FindElements(By.TagName("button"));
 
@@ -19,7 +22,17 @@ namespace consoleOrange.Pages
             {
                 if (button.Text.Equals("SAVE"))
                 {
-                    button.Click();
+                    try
+                    {
+                        Helper.ClickAndWaitForPageToLoad(button);
+                        //button.Click();
+                    }
+                    catch(Exception ex)
+                    {
+                        Helper.TakeErrorScreenshot();
+                        throw new Exception($"Save button WebElement from AddEmployeeWizard - JobCommand page is not found. \nDetails:\n{ex.Message}");
+                    }
+                    
                     break;
                 }
             }
