@@ -4,9 +4,8 @@
     {
         public static bool SearchEmployee(string employeeName)
         {
-            EmployeeListCommand objSearch = new EmployeeListCommand(employeeName);
-
-            return objSearch.PressSearchBtn();
+            return new EmployeeListCommand().EnterEmployeeName(employeeName)
+                .PressSearchBtn();
         }
     }
 }

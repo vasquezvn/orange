@@ -6,7 +6,7 @@ namespace consoleOrange.Pages
     {
         public static JobCommand SetRegion(String region)
         {
-            return new JobCommand(region);
+            return new JobCommand().SetRegion(region);
         }
     }
 }

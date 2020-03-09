@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace consoleOrange.Pages
 {
@@ -12,7 +13,12 @@ namespace consoleOrange.Pages
 
         public AddEmployeeWizardPersonalDetailsCommand PressNextButton()
         {
-            Helper.WaitUntilElementExists(locatorBtnSection);
+            //Helper.WaitUntilElementExists(locatorBtnSection);
+            //Helper.WaitUntilElementVisible(locatorBtnSection);
+            //Helper.WaitUntilElementClickable(locatorBtnSection);
+            //Helper.ClickAndWaitForPageToLoad(btnSection);
+
+            Thread.Sleep(15000);
 
             ReadOnlyCollection<IWebElement> btnCollection = btnSection.FindElements(By.TagName("button"));
 

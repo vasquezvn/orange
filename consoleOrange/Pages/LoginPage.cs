@@ -9,7 +9,7 @@
 
         public static LoginPageCommand LoginAs(string userName)
         {
-            return new LoginPageCommand(userName);
+            return new LoginPageCommand().LoginAs(userName);
         }
     }
 }

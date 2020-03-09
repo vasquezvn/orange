@@ -8,25 +8,23 @@ namespace consoleOrange.Pages
     {
 
         #region Locators
-        private static By locatorDropDownBloodGroup => By.Id("1_inputfileddiv");
-        private static By locatorBtnRegion => By.Id("wizard-nav-button-section");
-        private static By locatorDropDownMaritalStatus => By.Id("emp_marital_status_inputfileddiv");
+        private By locatorDropDownBloodGroup => By.Id("1_inputfileddiv");
+        private By locatorBtnRegion => By.Id("wizard-nav-button-section");
+        private By locatorDropDownMaritalStatus => By.Id("emp_marital_status_inputfileddiv");
 
         #endregion
 
 
         #region IWebElements
-        private static IWebElement DropdownBloodGroup => Driver.Instance.FindElement(locatorDropDownBloodGroup);
-        private static IWebElement txtHobbie => Driver.Instance.FindElement(By.Id("5"));
-        private static IWebElement DropdownMaritalStatus => Driver.Instance.FindElement(locatorDropDownMaritalStatus);
-        private static IWebElement btnRegion => Driver.Instance.FindElement(locatorBtnRegion);
+        private IWebElement DropdownBloodGroup => Driver.Instance.FindElement(locatorDropDownBloodGroup);
+        private IWebElement txtHobbie => Driver.Instance.FindElement(By.Id("5"));
+        private IWebElement DropdownMaritalStatus => Driver.Instance.FindElement(locatorDropDownMaritalStatus);
+        private IWebElement btnRegion => Driver.Instance.FindElement(locatorBtnRegion);
 
         #endregion
 
 
-        public PersonalDetailsCommand()
-        {
-        }
+        public PersonalDetailsCommand() { }
 
 
         internal bool IsMaritalStatusOptionAvailable(string maritalStatusOption)
@@ -59,24 +57,25 @@ namespace consoleOrange.Pages
             return result;
         }
 
-        
-        public PersonalDetailsCommand(string BloodGroup)
+        public PersonalDetailsCommand SetBloodGroup(string bloodGroup)
         {
             Helper.WaitUntilElementExists(locatorDropDownBloodGroup);
 
             try
             {
                 DropdownBloodGroup.Click();
-                Helper.getWebElementFromDropdown(DropdownBloodGroup, BloodGroup).Click();
+                Helper.getWebElementFromDropdown(DropdownBloodGroup, bloodGroup).Click();
             }
             catch (Exception ex)
             {
                 Helper.TakeErrorScreenshot();
                 throw new Exception($"Dropdown BloodGroup WebElement from Personal Detail Page is not found. \nDetails:\n{ex.Message}");
             }
+
+            return this;
         }
 
-        
+
         public PersonalDetailsCommand WithHobbie(string Hobbies)
         {
             try

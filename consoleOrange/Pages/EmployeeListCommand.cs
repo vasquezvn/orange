@@ -1,23 +1,29 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace consoleOrange.Pages
 {
     public class EmployeeListCommand
     {
         private string EmployeeName;
+        private By locatorTxtSearchEmployee => By.Id("employee_name_quick_filter_employee_list_value");
 
         #region IWebElement
-        private static IWebElement txtSearchEmployee => Driver.Instance.FindElement(By.Id("employee_name_quick_filter_employee_list_value"));
-        private static IWebElement iconSearch => Driver.Instance.FindElement(By.Id("quick_search_icon"));
-        private static IWebElement tableEmployeeList => Driver.Instance.FindElement(By.Id("employeeListTable"));
+        private IWebElement txtSearchEmployee => Driver.Instance.FindElement(locatorTxtSearchEmployee);
+        private IWebElement iconSearch => Driver.Instance.FindElement(By.Id("quick_search_icon"));
+        private IWebElement tableEmployeeList => Driver.Instance.FindElement(By.Id("employeeListTable"));
 
         #endregion
 
-        public EmployeeListCommand(string EmployeeName)
+        public EmployeeListCommand() { }
+
+        public EmployeeListCommand EnterEmployeeName(string employeeName)
         {
-            this.EmployeeName = EmployeeName;
+            EmployeeName = employeeName;
+
+            Helper.ClickAndWaitForPageToLoad(txtSearchEmployee);
 
             try
             {
@@ -28,6 +34,8 @@ namespace consoleOrange.Pages
                 Helper.TakeErrorScreenshot();
                 throw new Exception($"Search Employee WebElement from EmployeeList page is not found. \nDetails:\n{ex.Message}");
             }
+
+            return this;
         }
 
         public bool PressSearchBtn()
@@ -36,7 +44,10 @@ namespace consoleOrange.Pages
 
             try
             {
+                Helper.ClickAndWaitForPageToLoad(iconSearch);
                 iconSearch.Click();
+
+                Thread.Sleep(10000);
 
                 Helper.WaitUntilElementExists(By.TagName("tr"));
                 IReadOnlyCollection<IWebElement> rowsEmployee = tableEmployeeList.FindElements(By.TagName("tr"));

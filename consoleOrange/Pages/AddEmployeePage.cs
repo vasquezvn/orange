@@ -1,7 +1,4 @@
-﻿using OpenQA.Selenium;
-using System;
-
-namespace consoleOrange.Pages
+﻿namespace consoleOrange.Pages
 {
     public class AddEmployeePage
     {
@@ -13,7 +10,7 @@ namespace consoleOrange.Pages
 
         public static AddEmployeePageCommand AddEmployeeAs(string firstName)
         {
-            return new AddEmployeePageCommand(firstName);
+            return new AddEmployeePageCommand().AddEmployeeAs(firstName);
         }
 
 

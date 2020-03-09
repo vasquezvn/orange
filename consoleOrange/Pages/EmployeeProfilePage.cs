@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.Threading;
 
 namespace consoleOrange.Pages
 {
@@ -12,7 +13,11 @@ namespace consoleOrange.Pages
         {
             //Helper.WaitUntilElementExists(locatorLblFistName);
             //Helper.WaitUntilElementVisible(locatorLblFistName);
-            Helper.WaitUntilElementClickable(locatorLblFistName);
+            //Helper.WaitUntilElementClickable(locatorLblFistName);
+            //Helper.ClickAndWaitForPageToLoad(lblFistName);
+
+            Thread.Sleep(15000);
+
             string labelFirstName;
 
             try
@@ -22,7 +27,7 @@ namespace consoleOrange.Pages
             catch (Exception ex)
             {
                 Helper.TakeErrorScreenshot();
-                throw new Exception($"Fist Name label WebElement from Employee Profile page is not found. \nDetails:\n{ex.Message}");
+                throw new Exception($"First Name label WebElement from Employee Profile page is not found. \nDetails:\n{ex.Message}");
             }
 
             return labelFirstName;

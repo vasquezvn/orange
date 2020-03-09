@@ -14,46 +14,44 @@ namespace consoleOrange.Pages
         }
 
         #region Locators
-        private static By locatorDropDown => By.Id("location_inputfileddiv");
-        private static By locatorTxtFirstName => By.Id("firstName");
-        private static By locatorBtnNext => By.Id("systemUserSaveBtn");
+        private By locatorDropDown => By.Id("location_inputfileddiv");
+        private By locatorTxtFirstName => By.Id("firstName");
+        private By locatorBtnNext => By.Id("systemUserSaveBtn");
         #endregion
 
         #region IWebWElements
-        private static IWebElement txtFirstName => Driver.Instance.FindElement(locatorTxtFirstName);
-        private static IWebElement txtLastName => Driver.Instance.FindElement(By.Id("lastName"));
-        private static IWebElement btnNext => Driver.Instance.FindElement(locatorBtnNext);
-        private static IWebElement selectDropdownLocation => Driver.Instance.FindElement(locatorDropDown);
-        private static ReadOnlyCollection<IWebElement> btnsOnAddform => Driver.Instance.FindElements(By.XPath("//form[@id='pimAddEmployeeForm']/div[@class='modal-footer']/a"));
+        private IWebElement txtFirstName => Driver.Instance.FindElement(locatorTxtFirstName);
+        private IWebElement txtLastName => Driver.Instance.FindElement(By.Id("lastName"));
+        private IWebElement btnNext => Driver.Instance.FindElement(locatorBtnNext);
+        private IWebElement selectDropdownLocation => Driver.Instance.FindElement(locatorDropDown);
+        private ReadOnlyCollection<IWebElement> btnsOnAddform => Driver.Instance.FindElements(By.XPath("//form[@id='pimAddEmployeeForm']/div[@class='modal-footer']/a"));
 
         #endregion
 
-        public AddEmployeePageCommand()
-        {
-        }
+        public AddEmployeePageCommand() { }
 
-
-        public AddEmployeePageCommand(string FirstName)
+        public AddEmployeePageCommand AddEmployeeAs(string firstName)
         {
             Helper.WaitUntilElementExists(locatorTxtFirstName, 20);
 
             try
             {
-                txtFirstName.SendKeys(FirstName);
+                txtFirstName.SendKeys(firstName);
             }
             catch (Exception ex)
             {
                 Helper.TakeErrorScreenshot();
                 throw new Exception($"First Name WebElement from Add Employee form is not found. \nDetails:\n{ex.Message}");
             }
+
+            return this;
         }
 
-
-        public AddEmployeePageCommand WithLastName(string LastName)
+        public AddEmployeePageCommand WithLastName(string lastName)
         {
             try
             {
-                txtLastName.SendKeys(LastName);
+                txtLastName.SendKeys(lastName);
             }
             catch (Exception ex)
             {

@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace consoleOrange.Pages
 {
@@ -16,6 +17,8 @@ namespace consoleOrange.Pages
             //Helper.WaitUntilElementClickable(locatorBtnSection);
             //Helper.WaitUntilElementVisible(locatorBtnSection);
 
+            Thread.Sleep(15000);
+
             ReadOnlyCollection<IWebElement> btnCollection = btnSection.FindElements(By.TagName("button"));
 
             foreach (IWebElement button in btnCollection)
@@ -24,8 +27,7 @@ namespace consoleOrange.Pages
                 {
                     try
                     {
-                        Helper.ClickAndWaitForPageToLoad(button);
-                        //button.Click();
+                        button.Click();
                     }
                     catch(Exception ex)
                     {

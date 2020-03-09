@@ -8,31 +8,24 @@ namespace consoleOrange.Pages
     {
 
         #region Locators
-        private static By locatorSuccessPopup => By.Id("toast-container");
-        private static By locatorDropdownFte => By.Id("10_inputfileddiv");
-        private static By locatorDropdownRegion => By.Id("9_inputfileddiv");
-        private static By locatorDropdownTempDep => By.Id("11_inputfileddiv");
+        private By locatorDropdownFte => By.Id("10_inputfileddiv");
+        private By locatorDropdownRegion => By.Id("9_inputfileddiv");
+        private By locatorDropdownTempDep => By.Id("11_inputfileddiv");
         #endregion
 
         #region IWebElements
-        private static IWebElement DropdownRegion => Driver.Instance.FindElement(locatorDropdownRegion);
-        private static IWebElement DropdownFte => Driver.Instance.FindElement(locatorDropdownFte);
-        private static IWebElement DropdownTempDep => Driver.Instance.FindElement(locatorDropdownTempDep);
-        private static IWebElement BtnsWizard => Driver.Instance.FindElement(By.Id("wizard-nav-button-section"));
+        private IWebElement DropdownRegion => Driver.Instance.FindElement(locatorDropdownRegion);
+        private IWebElement DropdownFte => Driver.Instance.FindElement(locatorDropdownFte);
+        private IWebElement DropdownTempDep => Driver.Instance.FindElement(locatorDropdownTempDep);
+        private IWebElement BtnsWizard => Driver.Instance.FindElement(By.Id("wizard-nav-button-section"));
 
         #endregion
 
-        public JobCommand(string region)
-        {
-            //Helper.ClickAndWaitForPageToLoad(DropdownRegion);
-            //Helper.WaitUntilElementVisible(locatorDropdownRegion);
-            
-            //Helper.WaitUntilElementClickable(locatorDropdownRegion);
-            //Helper.WaitUntilElementExists(locatorDropdownRegion);
-            //Helper.WaitUntilElementVisible(locatorDropdownRegion);
-            //Helper.ScrollToView(locatorDropdownRegion);
+        public JobCommand() { }
 
-            Thread.Sleep(20000);
+        public JobCommand SetRegion(string region)
+        {
+            Thread.Sleep(15000);
 
             try
             {
@@ -44,7 +37,8 @@ namespace consoleOrange.Pages
                 Helper.TakeErrorScreenshot();
                 throw new Exception($"Region Dropdown WebElement from JobCommand Page is not found. \nDetails:\n{ex.Message}");
             }
-            
+
+            return this;
         }
 
         public JobCommand WithFte(string fte)
@@ -53,7 +47,6 @@ namespace consoleOrange.Pages
 
             try
             {
-                //Helper.ScrollToView(locatorDropdownFte).Click();
                 DropdownFte.Click();
                 Helper.getWebElementFromDropdown(DropdownFte, fte).Click();
             }

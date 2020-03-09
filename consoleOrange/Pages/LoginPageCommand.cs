@@ -6,13 +6,15 @@ namespace consoleOrange.Pages
     public class LoginPageCommand
     {
         #region IWebElements
-        private static IWebElement txtUsername => Driver.Instance.FindElement(By.Id("txtUsername"));
-        private static IWebElement txtPassword => Driver.Instance.FindElement(By.Id("txtPassword"));
-        private static IWebElement btnLogin => Driver.Instance.FindElement(By.Id("btnLogin"));
+        private IWebElement txtUsername => Driver.Instance.FindElement(By.Id("txtUsername"));
+        private IWebElement txtPassword => Driver.Instance.FindElement(By.Id("txtPassword"));
+        private IWebElement btnLogin => Driver.Instance.FindElement(By.Id("btnLogin"));
 
         #endregion
+        
+        public LoginPageCommand() { }
 
-        public LoginPageCommand(string userName)
+        public LoginPageCommand LoginAs(string userName)
         {
             try
             {
@@ -24,6 +26,8 @@ namespace consoleOrange.Pages
                 Helper.TakeErrorScreenshot();
                 throw new Exception($"User Name WebElement from Login Page is not found. \nDetails:\n{ex.Message}");
             }
+
+            return this;
         }
 
         public LoginPageCommand WithPassword(string password)
