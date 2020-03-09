@@ -42,9 +42,15 @@ namespace orange
                 .WithTemporaryDepartment("Sub unit-1")
                 .PressSaveBtn();
 
+            AddEmployeeWizardPersonalDetailsPage.PressNextButton();
+
+            AddEmployeeWizardJobPage.PressSaveButton();
+
+            var employeeName = EmployeeProfilePage.GetLabelFirstName();
+
             MenuPage.GoToOption(MenuOptions.EmployeeList);
 
-            bool searchResult = EmployeeListPage.SearchEmployee(userName);
+            bool searchResult = EmployeeListPage.SearchEmployee(employeeName);
 
             Assert.IsTrue(searchResult, "User Can't Be Found");
         }

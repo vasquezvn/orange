@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using System;
+using System.Threading;
 
 namespace consoleOrange.Pages
 {
@@ -23,9 +24,15 @@ namespace consoleOrange.Pages
 
         public JobCommand(string region)
         {
-            //Helper.ClickAndWaitForPageToLoad(BtnsWizard);
-            Helper.WaitUntilElementClickable(locatorDropdownRegion);
-            //Helper.WaitUntilElementClickable(locatorDropdownRegion, 20);
+            //Helper.ClickAndWaitForPageToLoad(DropdownRegion);
+            //Helper.WaitUntilElementVisible(locatorDropdownRegion);
+            
+            //Helper.WaitUntilElementClickable(locatorDropdownRegion);
+            //Helper.WaitUntilElementExists(locatorDropdownRegion);
+            //Helper.WaitUntilElementVisible(locatorDropdownRegion);
+            //Helper.ScrollToView(locatorDropdownRegion);
+
+            Thread.Sleep(10000);
 
             try
             {
@@ -46,6 +53,7 @@ namespace consoleOrange.Pages
 
             try
             {
+                //Helper.ScrollToView(locatorDropdownFte).Click();
                 DropdownFte.Click();
                 Helper.getWebElementFromDropdown(DropdownFte, fte).Click();
             }
@@ -87,8 +95,6 @@ namespace consoleOrange.Pages
                 Helper.TakeErrorScreenshot();
                 throw new Exception($"Save button WebElement from JobCommand Page is not found. \nDetails:\n{ex.Message}");
             }
-
-            //Helper.WaitUntilElementVisible(locatorSuccessPopup);
         }
     }
 }

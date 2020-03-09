@@ -123,11 +123,6 @@ namespace consoleOrange
                 element.Click();
                 wait.Until(ExpectedConditions.StalenessOf(element));
             }
-            catch(NoSuchElementException)
-            {
-                Console.WriteLine($"Element :{element} was not found in current page.");
-                throw;
-            }
             catch (Exception ex)
             {
                 Console.WriteLine($"ClickAndWaitForPageToLoad method is failing due {ex.Message}");
@@ -167,6 +162,29 @@ namespace consoleOrange
         {
             Random random = new Random();
             return random.Next(min, max);
+        }
+
+        private static void ScrollTo(int xPosition = 0, int yPosition = 0)
+        {
+            var js = String.Format("window.scrollTo({0}, {1})", xPosition, yPosition);
+            //var js = String.Format("window.scrollBy({0}, {1})", xPosition, yPosition);
+            ((IJavaScriptExecutor)Driver.Instance).ExecuteScript(js);
+        }
+
+        private static void ScrollToView(IWebElement element)
+        {
+            if (element.Location.Y > 200)
+            {
+                ScrollTo(0, element.Location.Y - 100);
+            }
+        }
+
+        public static IWebElement ScrollToView(By selector)
+        {
+            var element = Driver.Instance.FindElement(selector);
+            ScrollToView(element);
+
+            return element;
         }
 
     }
