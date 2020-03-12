@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using System;
-using System.Threading;
 
 namespace consoleOrange.Pages
 {
@@ -11,6 +10,8 @@ namespace consoleOrange.Pages
         private By locatorDropdownFte => By.Id("10_inputfileddiv");
         private By locatorDropdownRegion => By.Id("9_inputfileddiv");
         private By locatorDropdownTempDep => By.Id("11_inputfileddiv");
+        private By locatorSpinner => By.ClassName("spinner-layer");
+
         #endregion
 
         #region IWebElements
@@ -25,7 +26,7 @@ namespace consoleOrange.Pages
 
         public JobCommand SetRegion(string region)
         {
-            Thread.Sleep(15000);
+            Helper.WaitForSpinnerDisapear(locatorSpinner);
 
             try
             {

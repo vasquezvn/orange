@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.IO;
+using System.Threading;
 
 namespace consoleOrange
 {
@@ -63,22 +64,6 @@ namespace consoleOrange
             wait.Until(waiter);
         }
 
-        public static void waitForElement2(IWebElement element)
-        {
-            try
-            {
-                Driver.Instance.Navigate().GoToUrl("https://orangehrm-demo-6x.orangehrmlive.com/client/#/pim/employees");
-            }
-            catch
-            {
-                //ignored
-            }
-            finally
-            {
-                Driver.Instance.FindElement(By.Id("location_inputfileddiv"));
-            }
-        }
-
         public static void WaitUntilElementExists(By elementLocator, int timeout = 10)
         {
             try
@@ -86,14 +71,10 @@ namespace consoleOrange
                 var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(timeout));
                 wait.Until(ExpectedConditions.ElementExists(elementLocator));
             }
-            catch(NoSuchElementException)
-            {
-                Console.WriteLine($"Element with locator: {elementLocator} was not found in current context page");
-                throw;
-            }
             catch(Exception ex)
             {
-                Console.WriteLine($"WaitUntilElementExists method is failing due {ex.Message}");
+                TakeErrorScreenshot();
+                throw new Exception($"Element locator {elementLocator.ToString()} can't be found in WaitUntilElementExists method. \nDetails:\n{ex.Message}");
             }
         }
 
@@ -104,14 +85,10 @@ namespace consoleOrange
                 var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(timeout));
                 wait.Until(ExpectedConditions.ElementToBeClickable(elementLocator));
             }
-            catch (NoSuchElementException)
-            {
-                Console.WriteLine($"Element with locator: {elementLocator} was not found in current context page");
-                throw;
-            }
             catch (Exception ex)
             {
-                Console.WriteLine($"WaitUntilElementClickable method is failing due {ex.Message}");
+                TakeErrorScreenshot();
+                throw new Exception($"Element locator {elementLocator.ToString()} can't be found in WaitUntilElementClickable method. \nDetails:\n{ex.Message}");
             }
         }
 
@@ -121,11 +98,12 @@ namespace consoleOrange
             {
                 var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(timeout));
                 element.Click();
-                wait.Until(ExpectedConditions.StalenessOf(element));
+                wait.Until(ExpectedConditions.ElementToBeClickable(element));
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"ClickAndWaitForPageToLoad method is failing due {ex.Message}");
+                TakeErrorScreenshot();
+                throw new Exception($"Element locator can't be found in ClickAndWaitForPageToLoad method. \nDetails:\n{ex.Message}");
             }
         }
 
@@ -143,7 +121,8 @@ namespace consoleOrange
             }
             catch (Exception ex)
             {
-                throw new Exception($"Element with locator: {elementLocator} was not found in current context page");
+                TakeErrorScreenshot();
+                throw new Exception($"Element locator {elementLocator.ToString()} can't be found in WaitUntilElementVisible method. \nDetails:\n{ex.Message}");
             }
 
             if(iframeElement != null)
@@ -187,5 +166,78 @@ namespace consoleOrange
             return element;
         }
 
+        public static void WaitForReady(TimeSpan seconds)
+        {
+            WebDriverWait wait = new WebDriverWait(Driver.Instance, seconds);
+            wait.Until(d =>
+            {
+                return WaitForPageLoad(seconds);
+            });
+        }
+
+        private static bool WaitForPageLoad(TimeSpan waitTime)
+        {
+            WaitForDocumentReady(waitTime);
+            bool ajaxReady = WaitForAjaxReady(waitTime);
+            WaitForDocumentReady(waitTime);
+
+            return ajaxReady;
+        }
+
+        private static bool WaitForAjaxReady(TimeSpan waitTime)
+        {
+            Thread.Sleep(1000);
+            WebDriverWait wait = new WebDriverWait(Driver.Instance, waitTime);
+
+            return wait.Until<bool>((d) =>
+            {
+                return Driver.Instance.FindElements(By.CssSelector(".waiting, .tb-loading")).Count == 0;
+            });
+        }
+
+        private static void WaitForDocumentReady(TimeSpan waitTime)
+        {
+            var wait = new WebDriverWait(Driver.Instance, waitTime);
+            var javascript = Driver.Instance as IJavaScriptExecutor;
+
+            if (javascript == null)
+                throw new ArgumentException("driver", "Driver must support javascript execution");
+
+            wait.Until((d) =>
+            {
+                try
+                {
+                    string readyState = javascript.ExecuteScript("if (document.readyState) return document.readyStatue;").ToString();
+                    return readyState.ToLower() == "complete";
+                }
+                catch (InvalidOperationException e)
+                {
+                    return e.Message.ToLower().Contains("unable to get browser");
+                }
+                catch (WebDriverException e)
+                {
+                    return e.Message.ToLower().Contains("unable to connect");
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+            );
+        }
+
+        public static void WaitForSpinnerDisapear(By locator)
+        {
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(60));
+                wait.Until(ExpectedConditions.InvisibilityOfElementLocated(locator));
+            }
+            catch (Exception ex)
+            {
+                TakeErrorScreenshot();
+                throw new Exception($"Element locator {locator.ToString()} can't be found in WaitForSpinnerDisapear method. \nDetails:\n{ex.Message}");
+            }
+        }
     }
 }

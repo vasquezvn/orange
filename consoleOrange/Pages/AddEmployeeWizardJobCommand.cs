@@ -1,23 +1,19 @@
 ﻿using OpenQA.Selenium;
 using System;
 using System.Collections.ObjectModel;
-using System.Threading;
 
 namespace consoleOrange.Pages
 {
     public class AddEmployeeWizardJobCommand
     {
         private By locatorBtnSection => By.Id("wizard-nav-button-section");
+        private By locatorSpinner => By.ClassName("spinner-layer");
 
         private IWebElement btnSection => Driver.Instance.FindElement(locatorBtnSection);
 
         public void PressSaveButton()
         {
-            //Helper.WaitUntilElementExists(locatorBtnSection);
-            //Helper.WaitUntilElementClickable(locatorBtnSection);
-            //Helper.WaitUntilElementVisible(locatorBtnSection);
-
-            Thread.Sleep(15000);
+            Helper.WaitForSpinnerDisapear(locatorSpinner);
 
             ReadOnlyCollection<IWebElement> btnCollection = btnSection.FindElements(By.TagName("button"));
 

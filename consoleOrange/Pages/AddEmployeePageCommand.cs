@@ -17,6 +17,7 @@ namespace consoleOrange.Pages
         private By locatorDropDown => By.Id("location_inputfileddiv");
         private By locatorTxtFirstName => By.Id("firstName");
         private By locatorBtnNext => By.Id("systemUserSaveBtn");
+        private By locatorDropDownLocation => By.XPath("//div[@class='select-wrapper initialized']/input[@class='select-dropdown']");
         #endregion
 
         #region IWebWElements
