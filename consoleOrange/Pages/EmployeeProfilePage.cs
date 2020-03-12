@@ -1,22 +1,18 @@
 ﻿using OpenQA.Selenium;
 using System;
-using System.Threading;
 
 namespace consoleOrange.Pages
 {
     public class EmployeeProfilePage
     {
         private static By locatorLblFistName => By.Id("pim.navbar.employeeName");
+        private static By locatorSpinner => By.ClassName("spinner-layer");
+
         private static IWebElement lblFistName => Driver.Instance.FindElement(locatorLblFistName);
 
         public static string GetLabelFirstName()
         {
-            //Helper.WaitUntilElementExists(locatorLblFistName);
-            //Helper.WaitUntilElementVisible(locatorLblFistName);
-            //Helper.WaitUntilElementClickable(locatorLblFistName);
-            //Helper.ClickAndWaitForPageToLoad(lblFistName);
-
-            Thread.Sleep(15000);
+            Helper.WaitForSpinnerDisapear(locatorSpinner);
 
             string labelFirstName;
 
