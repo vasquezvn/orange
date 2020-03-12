@@ -67,7 +67,7 @@ namespace orange
 
             MenuPage.GoToOption(MenuOptions.AddEmployee);
 
-            Assert.IsTrue(AddEmployeePage.IsSaveButtonDisplayed(textButton), $"{textButton} button is not displayed on Add Employee form");
+            Assert.IsTrue(AddEmployeePage.IsButtonDisplayed(textButton), $"{textButton} button is not displayed on Add Employee form");
         }
 
         [TestMethod]

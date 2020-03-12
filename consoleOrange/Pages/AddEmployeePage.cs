@@ -3,7 +3,7 @@
     public class AddEmployeePage
     {
 
-        public static bool IsSaveButtonDisplayed(string textButton)
+        public static bool IsButtonDisplayed(string textButton)
         {
             return new AddEmployeePageCommand().IsButtonDisplayed(textButton);
         }
