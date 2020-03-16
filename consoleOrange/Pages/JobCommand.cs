@@ -27,6 +27,7 @@ namespace consoleOrange.Pages
         public JobCommand SetRegion(string region)
         {
             Helper.WaitForSpinnerDisapear(locatorSpinner);
+            Helper.WaitUntilElementClickable(locatorDropdownRegion);
 
             try
             {

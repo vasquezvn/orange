@@ -13,6 +13,7 @@ namespace consoleOrange.Pages
         public static string GetLabelFirstName()
         {
             Helper.WaitForSpinnerDisapear(locatorSpinner);
+            Helper.WaitUntilElementExists(locatorLblFistName);
 
             string labelFirstName;
 

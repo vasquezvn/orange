@@ -9,11 +9,12 @@ namespace consoleOrange.Pages
         private string EmployeeName;
         private By locatorTxtSearchEmployee => By.Id("employee_name_quick_filter_employee_list_value");
         private By locatorRowTable => By.ClassName("cursor-pointer");
+        private By locatorEmployeeListTable => By.Id("employeeListTable");
 
         #region IWebElement
         private IWebElement txtSearchEmployee => Driver.Instance.FindElement(locatorTxtSearchEmployee);
         private IWebElement iconSearch => Driver.Instance.FindElement(By.Id("quick_search_icon"));
-        private IWebElement tableEmployeeList => Driver.Instance.FindElement(By.Id("employeeListTable"));
+        private IWebElement tableEmployeeList => Driver.Instance.FindElement(locatorEmployeeListTable);
 
         #endregion
 
@@ -48,6 +49,7 @@ namespace consoleOrange.Pages
                 iconSearch.Click();
 
                 Helper.WaitUntilElementVisible(locatorRowTable);
+                Helper.WaitUntilElementExists(locatorEmployeeListTable, 60);
 
                 IReadOnlyCollection<IWebElement> rowsEmployee = tableEmployeeList.FindElements(By.TagName("tr"));
 

@@ -59,7 +59,7 @@ namespace consoleOrange.Pages
 
         public PersonalDetailsCommand SetBloodGroup(string bloodGroup)
         {
-            Helper.WaitUntilElementExists(locatorDropDownBloodGroup);
+            Helper.WaitUntilElementExists(locatorDropDownBloodGroup, 60);
 
             try
             {
